@@ -21,4 +21,25 @@ class QueueServiceTest {
         );
         assertThat(result.text(), is("temperature=18"));
     }
+
+    @Test
+    public void whenDoublePostThenDoubleGetQueue() {
+        QueueService queueService = new QueueService();
+        String paramForPostMethod1 = "temperature=18";
+        String paramForPostMethod2 = "temperature=23";
+        queueService.process(
+                new Req("POST", "queue", "weather", paramForPostMethod1)
+        );
+        queueService.process(
+                new Req("POST", "queue", "weather", paramForPostMethod2)
+        );
+        Resp result1 = queueService.process(
+                new Req("GET", "queue", "weather", null)
+        );
+        Resp result2 = queueService.process(
+                new Req("GET", "queue", "weather", null)
+        );
+        assertThat(result1.text(), is("temperature=18"));
+        assertThat(result2.text(), is("temperature=23"));
+    }
 }
