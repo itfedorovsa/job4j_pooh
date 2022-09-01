@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class QueueServiceTest {
+public class QueueServiceTest {
 
     @Test
     public void whenPostThenGetQueue() {
@@ -41,5 +41,23 @@ class QueueServiceTest {
         );
         assertThat(result1.text(), is("temperature=18"));
         assertThat(result2.text(), is("temperature=23"));
+    }
+
+    @Test
+    public void whenOnlyGetThenReturnsEmptyString() {
+        QueueService queueService = new QueueService();
+        Resp result = queueService.process(
+                new Req("GET", "queue", "weather", null)
+        );
+        assertThat(result.text(), is(""));
+    }
+
+    @Test
+    public void whenNotImplementedRequest() {
+        QueueService queueService = new QueueService();
+        Resp result = queueService.process(
+                new Req("UPDATE", "queue", "weather", null)
+        );
+        assertThat(result.status(), is("501"));
     }
 }

@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class ReqTest {
+public class ReqTest {
 
     @Test
     public void whenQueueModePostMethod() {

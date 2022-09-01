@@ -5,7 +5,7 @@ import org.junit.jupiter.api.Test;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.MatcherAssert.assertThat;
 
-class TopicServiceTest {
+public class TopicServiceTest {
 
     @Test
     public void whenTopic() {
@@ -63,5 +63,31 @@ class TopicServiceTest {
         assertThat(result1.text(), is("temperature=18"));
         assertThat(result2.text(), is("temperature=18"));
         assertThat(result3.text(), is(""));
+    }
+
+    @Test
+    public void whenOnlyGetThenReturnsEmptyString() {
+        TopicService topicService = new TopicService();
+        String paramForSubscriber = "client407";
+        topicService.process(
+                new Req("GET", "topic", "weather", paramForSubscriber)
+        );
+        topicService.process(
+                new Req("GET", "topic", "weather", paramForSubscriber)
+        );
+        Resp result = topicService.process(
+                new Req("GET", "topic", "weather", paramForSubscriber)
+        );
+        assertThat(result.text(), is(""));
+    }
+
+    @Test
+    public void whenNotImplementedRequest() {
+        TopicService topicService = new TopicService();
+        String paramForSubscriber = "client407";
+        Resp result = topicService.process(
+                new Req("UPDATE", "topic", "weather", paramForSubscriber)
+        );
+        assertThat(result.status(), is("501"));
     }
 }
