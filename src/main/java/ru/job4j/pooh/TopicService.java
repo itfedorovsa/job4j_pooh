@@ -25,7 +25,7 @@ public class TopicService implements Service {
         String sourceName = req.getSourceName();
         String httpRequest = req.httpRequestType();
         String text = "";
-        String status;
+        String status = "501";
         Map<String, ConcurrentLinkedQueue<String>> topic = topics.get(sourceName);
         if ("POST".equals(httpRequest)) {
             if (topic != null) {
@@ -48,8 +48,6 @@ public class TopicService implements Service {
                 }
             }
             topics.get(sourceName).putIfAbsent(parameter, new ConcurrentLinkedQueue<>());
-        } else {
-            status = "501";
         }
         return new Resp(text, status);
     }
