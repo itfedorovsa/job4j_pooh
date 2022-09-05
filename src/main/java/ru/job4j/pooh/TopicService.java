@@ -26,28 +26,27 @@ public class TopicService implements Service {
         String httpRequest = req.httpRequestType();
         String text = "";
         String status = "501";
-        Map<String, ConcurrentLinkedQueue<String>> topic = topics.get(sourceName);
         if ("POST".equals(httpRequest)) {
+            Map<String, ConcurrentLinkedQueue<String>> topic = topics.get(sourceName);
             if (topic != null) {
                 for (ConcurrentLinkedQueue<String> queue : topic.values()) {
                     queue.add(parameter);
                 }
             }
+            text = parameter;
             status = "200";
         } else if ("GET".equals(httpRequest)) {
-            if (topic == null) {
-                topics.putIfAbsent(sourceName, new ConcurrentHashMap<>());
-                status = "200";
-            } else {
-                ConcurrentLinkedQueue<String> recipientQueue = topic.get(parameter);
-                if (recipientQueue != null && !recipientQueue.isEmpty()) {
-                        text = recipientQueue.poll();
-                        status = "200";
-                } else {
-                    status = "204";
-                }
-            }
+            topics.putIfAbsent(sourceName, new ConcurrentHashMap<>());
+            Map<String, ConcurrentLinkedQueue<String>> topic = topics.get(sourceName);
             topics.get(sourceName).putIfAbsent(parameter, new ConcurrentLinkedQueue<>());
+            ConcurrentLinkedQueue<String> recipientQueue = topic.get(parameter);
+            text = recipientQueue.poll();
+            if (text == null) {
+                text = "";
+                status = "204";
+            } else {
+                status = "200";
+            }
         }
         return new Resp(text, status);
     }

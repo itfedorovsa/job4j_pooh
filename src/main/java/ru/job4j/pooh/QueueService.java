@@ -23,19 +23,22 @@ public class QueueService implements Service {
     public Resp process(Req req) {
         String sourceName = req.getSourceName();
         String httpRequest = req.httpRequestType();
+        String parameter = req.getParam();
         String text = "";
         String status = "501";
         if ("POST".equals(httpRequest)) {
             queue.putIfAbsent(sourceName, new ConcurrentLinkedQueue<>());
-            queue.get(sourceName).add(req.getParam());
+            queue.get(sourceName).add(parameter);
+            text = parameter;
             status = "200";
         } else if ("GET".equals(httpRequest)) {
             ConcurrentLinkedQueue<String> elQueue = queue.getOrDefault(sourceName, new ConcurrentLinkedQueue<>());
-            if (elQueue != null) {
-                text = elQueue.poll();
-                status = "200";
-            } else {
+            text = elQueue.poll();
+            if (text == null) {
+                text = "";
                 status = "204";
+            } else {
+                status = "200";
             }
         }
         return new Resp(text, status);
