@@ -37,10 +37,8 @@ public class TopicService implements Service {
             status = "200";
         } else if ("GET".equals(httpRequest)) {
             topics.putIfAbsent(sourceName, new ConcurrentHashMap<>());
-            Map<String, ConcurrentLinkedQueue<String>> topic = topics.get(sourceName);
             topics.get(sourceName).putIfAbsent(parameter, new ConcurrentLinkedQueue<>());
-            ConcurrentLinkedQueue<String> recipientQueue = topic.get(parameter);
-            text = recipientQueue.poll();
+            text = topics.get(sourceName).get(parameter).poll();
             if (text == null) {
                 text = "";
                 status = "204";
