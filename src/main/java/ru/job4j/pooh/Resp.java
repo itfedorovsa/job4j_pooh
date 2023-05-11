@@ -2,8 +2,12 @@ package ru.job4j.pooh;
 
 /**
  * This class describes the response from the service
+ *
+ * @author FedorovSA (itfedorovsa@gmail.com)
+ * @version 1.0
  */
 public class Resp {
+
     /**
      * Answers text
      */
@@ -26,4 +30,5 @@ public class Resp {
     public String status() {
         return status;
     }
+
 }

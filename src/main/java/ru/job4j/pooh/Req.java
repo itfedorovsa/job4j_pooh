@@ -1,9 +1,10 @@
 package ru.job4j.pooh;
 
 /**
+ * This class is used for parsing an incoming request.
+ *
  * @author FedorovSA (itfedorovsa@gmail.com)
  * @version 1.0
- * This class is used for parsing an incoming request.
  */
 public class Req {
 
@@ -36,6 +37,7 @@ public class Req {
 
     /**
      * This method parses a content
+     *
      * @param content incoming request
      * @return Req object with (httpRequest, mode, source, parameter) fields
      */

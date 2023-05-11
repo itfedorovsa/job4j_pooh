@@ -2,9 +2,14 @@ package ru.job4j.pooh;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * Req test class
+ *
+ * @author FedorovSA (itfedorovsa@gmail.com)
+ * @version 1.0
+ */
 public class ReqTest {
 
     @Test
@@ -19,10 +24,10 @@ public class ReqTest {
                 + "" + ls
                 + "temperature=18" + ls;
         Req req = Req.of(content);
-        assertThat(req.httpRequestType(), is("POST"));
-        assertThat(req.getPoohMode(), is("queue"));
-        assertThat(req.getSourceName(), is("weather"));
-        assertThat(req.getParam(), is("temperature=18"));
+        assertThat(req.httpRequestType()).isEqualTo("POST");
+        assertThat(req.getPoohMode()).isEqualTo("queue");
+        assertThat(req.getSourceName()).isEqualTo("weather");
+        assertThat(req.getParam()).isEqualTo("temperature=18");
     }
 
     @Test
@@ -33,10 +38,10 @@ public class ReqTest {
                 + "User-Agent: curl/7.72.0" + ls
                 + "Accept: */*" + ls + ls + ls;
         Req req = Req.of(content);
-        assertThat(req.httpRequestType(), is("GET"));
-        assertThat(req.getPoohMode(), is("queue"));
-        assertThat(req.getSourceName(), is("weather"));
-        assertThat(req.getParam(), is(""));
+        assertThat(req.httpRequestType()).isEqualTo("GET");
+        assertThat(req.getPoohMode()).isEqualTo("queue");
+        assertThat(req.getSourceName()).isEqualTo("weather");
+        assertThat(req.getParam()).isEqualTo("");
     }
 
     @Test
@@ -51,10 +56,10 @@ public class ReqTest {
                 + "" + ls
                 + "temperature=18" + ls;
         Req req = Req.of(content);
-        assertThat(req.httpRequestType(), is("POST"));
-        assertThat(req.getPoohMode(), is("topic"));
-        assertThat(req.getSourceName(), is("weather"));
-        assertThat(req.getParam(), is("temperature=18"));
+        assertThat(req.httpRequestType()).isEqualTo("POST");
+        assertThat(req.getPoohMode()).isEqualTo("topic");
+        assertThat(req.getSourceName()).isEqualTo("weather");
+        assertThat(req.getParam()).isEqualTo("temperature=18");
     }
 
     @Test
@@ -65,9 +70,10 @@ public class ReqTest {
                 + "User-Agent: curl/7.72.0" + ls
                 + "Accept: */*" + ls + ls + ls;
         Req req = Req.of(content);
-        assertThat(req.httpRequestType(), is("GET"));
-        assertThat(req.getPoohMode(), is("topic"));
-        assertThat(req.getSourceName(), is("weather"));
-        assertThat(req.getParam(), is("client407"));
+        assertThat(req.httpRequestType()).isEqualTo("GET");
+        assertThat(req.getPoohMode()).isEqualTo("topic");
+        assertThat(req.getSourceName()).isEqualTo("weather");
+        assertThat(req.getParam()).isEqualTo("client407");
     }
+
 }

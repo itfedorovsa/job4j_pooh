@@ -2,9 +2,14 @@ package ru.job4j.pooh;
 
 import org.junit.jupiter.api.Test;
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.MatcherAssert.assertThat;
+import static org.assertj.core.api.Assertions.assertThat;
 
+/**
+ * TopicService test class
+ *
+ * @author FedorovSA (itfedorovsa@gmail.com)
+ * @version 1.0
+ */
 public class TopicServiceTest {
 
     @Test
@@ -30,8 +35,8 @@ public class TopicServiceTest {
         Resp result2 = topicService.process(
                 new Req("GET", "topic", "weather", paramForSubscriber2)
         );
-        assertThat(result1.text(), is("temperature=18"));
-        assertThat(result2.text(), is(""));
+        assertThat(result1.text()).isEqualTo("temperature=18");
+        assertThat(result2.text()).isEqualTo("");
     }
 
     @Test
@@ -60,9 +65,9 @@ public class TopicServiceTest {
         Resp result3 = topicService.process(
                 new Req("GET", "topic", "weather", paramForSubscriber3)
         );
-        assertThat(result1.text(), is("temperature=18"));
-        assertThat(result2.text(), is("temperature=18"));
-        assertThat(result3.text(), is(""));
+        assertThat(result1.text()).isEqualTo("temperature=18");
+        assertThat(result2.text()).isEqualTo("temperature=18");
+        assertThat(result3.text()).isEqualTo("");
     }
 
     @Test
@@ -78,7 +83,7 @@ public class TopicServiceTest {
         Resp result = topicService.process(
                 new Req("GET", "topic", "weather", paramForSubscriber)
         );
-        assertThat(result.text(), is(""));
+        assertThat(result.text()).isEqualTo("");
     }
 
     @Test
@@ -88,6 +93,6 @@ public class TopicServiceTest {
         Resp result = topicService.process(
                 new Req("UPDATE", "topic", "weather", paramForSubscriber)
         );
-        assertThat(result.status(), is("501"));
+        assertThat(result.status()).isEqualTo("501");
     }
 }

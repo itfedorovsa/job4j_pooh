@@ -1,6 +1,8 @@
 package ru.job4j.pooh;
 
-import java.io.*;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.nio.charset.StandardCharsets;
@@ -15,6 +17,9 @@ import java.util.concurrent.Executors;
  * The application launches Socket and waits for clients.
  * Clients can be of two types: senders (publisher) and recipients (subscriber).
  * It uses HTTP as the protocol.
+ *
+ * @author FedorovSA (itfedorovsa@gmail.com)
+ * @version 1.0
  */
 public class PoohServer {
     private final Map<String, Service> modes = new HashMap<>();
@@ -49,7 +54,13 @@ public class PoohServer {
         }
     }
 
+    /**
+     * Start application
+     *
+     * @param args arguments
+     */
     public static void main(String[] args) {
         new PoohServer().start();
     }
+
 }
